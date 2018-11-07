@@ -13,9 +13,9 @@ import SignupContainer from '../../component/signup/signup';
 
 export class App extends React.Component {
 
-  componentDidMount() {
+  componentWillMount() {
     let token = utils.cookieFetch('chatToken');
-    if (token) this.props.login;
+    if (token) this.props.actions.login(token);
   }
 
   render() {

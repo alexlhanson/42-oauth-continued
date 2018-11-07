@@ -7,22 +7,22 @@ const authorize = (req) => {
   let code = req.query.code;
   console.log('step 1: code', code);
 
-  return superagent.post('https://googleapis.com/oauth2/v4/token')
+  return superagent.post('https://www.googleapis.com/oauth2/v4/token')
     .type('form')
     .send({
       code: code,
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
-      redirect_uri: `${process.env.redirect_uri}`,
+      redirect_uri: process.env.REDIRECT_URI,
       grant_type: 'authorization_code',
     })
     .then(res => {
       let googleToken = res.body.access_token;
-      console.log('step 2:', githubToken);
+      console.log('step 2:', googleToken);
       return googleToken;
     })
     .then(googleToken => {
-      return superagent.get(`https://googleapis.com/plus/v1/people/me/openIdConnect`)
+      return superagent.get(`https://www.googleapis.com/plus/v1/people/me/openIdConnect`)
         .set('Authorization', `Bearer ${googleToken}`)
         .then(response => {
           let user = response.body;

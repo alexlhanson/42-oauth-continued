@@ -27,6 +27,7 @@ router.get('/oauth', (req, res, next) => {
 
   authorize(req)
     .then(token => {
+      console.log(token);
       res.cookie('chatToken', token);
       res.redirect(process.env.REDIRECT_CLIENT_URI);
 
