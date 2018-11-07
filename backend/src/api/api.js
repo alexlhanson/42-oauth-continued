@@ -7,24 +7,28 @@ import User from '../auth/model.js';
 import auth from '../auth/lib/middleware.js';
 import Player from '../models/player';
 
-router.post('/register', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   let user = new User(req.body);
   user.save()
-    .then(user => res.send(user.generateToken()))
+    .then(user => {
+      let token = user.generateToken();
+      res.cookie('chatToken', token);
+      res.send();
+    })
     .catch(next);
 });
 
 router.get('/signin', auth, (req, res, next) => {
-  res.cookie('token', req.token);
+  res.cookie('chatToken', req.token);
   res.send(req.token);
 });
 
 router.get('/oauth', (req, res, next) => {
-  console.log(req.query);
 
   authorize(req)
     .then(token => {
-      res.cookie('token', token);
+      console.log(token);
+      res.cookie('chatToken', token);
       res.redirect(process.env.REDIRECT_CLIENT_URI);
 
     })

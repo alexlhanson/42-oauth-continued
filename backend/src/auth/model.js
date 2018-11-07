@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import mongoose from 'mongoose';
+import { promisify } from 'util';
 
 let Schema = mongoose.Schema;
 
@@ -47,22 +48,22 @@ userSchema.statics.authorize = function (token) {
 
 };
 
-userSchema.statics.createFromOAuth = function (githubUser) {
-  console.log('creating user from github user');
-  if (!githubUser) {
-    return Promise.reject('invalid github user');
+userSchema.statics.createFromOAuth = function (googleUser) {
+  console.log('creating user from google user');
+  if (!googleUser) {
+    return Promise.reject('invalid google user');
   }
-
-  return this.findOne({ username: githubUser.login })
-    .then(user => {
-      if (!user) { throw new Error('User not found'); }
-      console.log('welcome back');
-      return user;
-    })
-    .catch(err => {
-      let username = githubUser.login;
-      let password = 'none';
-
+  return this.findOne({ username: googleUser.login })
+  .then(user => {
+    if (!user) { throw new Error('User not found'); }
+    console.log('welcome back');
+    return user;
+  })
+  .catch(err => {
+    let username = googleUser.email;
+    let password = 'none';
+    
+    console.log(googleUser);
       return this.create({
         username: username,
         password: password,
@@ -78,5 +79,14 @@ userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password)
     .then(valid => valid ? this : null);
 };
+
+userSchema.fromToken = function(token){
+  return promisify(jwt.verify)(token, process.env.SECRET)
+    .then(({tokenSeed}) => User.findOne({tokenSeed}))
+    .then(user => {
+      if(!user) throw new error(401, 'AUTH error: user not found');
+      return user;
+    })
+}
 
 export default mongoose.model('users', userSchema);

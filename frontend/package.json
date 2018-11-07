@@ -1,0 +1,68 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Chat server with OAuth in React Redux",
+  "main": "webpack.common.js",
+  "jest": {
+    "globals": {
+      "__DEBUG__": true,
+      "__API_URL__": "http://localhost:3000"
+    }
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "watch": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "author": "Alex Hanson <alexlhanson.gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "eslint": "^5.7.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "node-sass": "^4.9.4",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "sass-loader": "^7.1.0",
+    "sinon": "^7.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "@fortawesome/react-fontawesome": "^0.1.3",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "dotenv": "^6.1.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "i": "^0.3.6",
+    "jest": "^23.6.0",
+    "lodash": "^4.17.11",
+    "npm": "^6.4.1",
+    "react-bootstrap": "^0.32.4",
+    "react-redux": "^5.0.7",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "superagent": "^4.0.0-beta.5",
+    "uuid": "^3.3.2",
+    "validator": "^10.8.0"
+  }
+}
