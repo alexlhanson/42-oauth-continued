@@ -1,21 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { MemoryRouter, Switch, Route, BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
 import * as utils from '../../lib/util';
 import * as auth from '../../actions/auth';
 import * as route from '../../actions/route'
-import createAppStore from '../../lib/store';
-
 
 import Header from '../header/header';
 import LandingContainer from '../../component/landing/landing';
 import SignupContainer from '../../component/signup/signup';
 
-const store = createAppStore();
 
-class App extends React.Component {
+export class App extends React.Component {
 
   componentDidMount() {
     let token = utils.cookieFetch('chatToken');
@@ -25,7 +21,6 @@ class App extends React.Component {
   render() {
     return (
       <section className="app">
-        <Provider store={store}>
           <BrowserRouter>
             <div>
               <Header actions={this.props.actions} />
@@ -40,20 +35,19 @@ class App extends React.Component {
               </MemoryRouter>
             </div>
           </BrowserRouter>
-        </Provider>
       </section>
     );
   };
 };
 
-let mapStateToProps = state => {
+const mapStateToProps = state => {
   return {
     token: state.token,
     route: state.route,
   }
 }
 
-let mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   actions: {
     login: token => dispatch(auth.login(token)),
     logout: () => dispatch(auth.logout()),

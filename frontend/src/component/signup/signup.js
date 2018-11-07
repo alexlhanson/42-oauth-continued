@@ -14,7 +14,7 @@ const Tooltip = props => {
   )
 }
 
-class SignupContainer extends React.Component {
+export class SignupContainer extends React.Component {
   constructor(props) {
     super(props)
 
@@ -117,9 +117,9 @@ class SignupContainer extends React.Component {
   };
 };
 
-export const mapStateToProps = state => ({});
+const mapStateToProps = state => ({});
 
-export const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   signup: user => dispatch(auth.signupRequest(user)),
 });
 
