@@ -1,18 +1,22 @@
 import superagent from 'superagent';
+import * as utils from '../lib/util';
 
 /********************************************************************************
 *         Synchronous                                                           *
 ********************************************************************************/
 
-export const tokenSet = token => {
+export const login = token => {
   return {
-    type: 'TOKEN_SET',
+    type: 'LOGIN',
     payload: token,
   };
 };
 
-export const tokenDestroy = () => {
-  return {type: 'TOKEN_DESTROY'};
+export const logout = () => {
+  utils.cookieDelete('chatToken');
+  return {
+    type: 'LOGOUT',
+  };
 };
 
 /********************************************************************************
@@ -20,13 +24,13 @@ export const tokenDestroy = () => {
 ********************************************************************************/
 
 export const signupRequest = user => dispatch => {
-  console.log('signing the hell up');
   return superagent.post(`${__API_URL__}/signup`)
     .send(user)
     .withCredentials()
     .then(res => {
-      console.log(res);
-      return handleToken(res, dispatch);
+      let token = utils.cookieFetch('chatToken');
+      if (token) dispatch(login(token)); 
+      return res;
     })
     .catch(console.error);
 };
@@ -36,18 +40,9 @@ export const loginRequest = user => dispatch => {
     .auth(user.username, user.password)
     .withCredentials()
     .then(res => {
-      try{
-        dispatch(tokenSet(res.text));
-        localStorage.setItem('token', res.text);
-        console.log('res',res);
-        return res;
-      } catch(error){ console.error;}
+      let token = utils.cookieFetch('chatToken');
+      if (token) dispatch(login(token)); 
+      return res;
     })
     .catch(console.error);
-};
-
-const handleToken = (res, dispatch) => {
-  dispatch(tokenSet(res.text));
-  localStorage.setItem('token', res.text);
-  return res;
 };
