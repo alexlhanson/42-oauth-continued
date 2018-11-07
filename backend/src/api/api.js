@@ -7,10 +7,14 @@ import User from '../auth/model.js';
 import auth from '../auth/lib/middleware.js';
 import Player from '../models/player';
 
-router.post('/register', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   let user = new User(req.body);
   user.save()
-    .then(user => res.send(user.generateToken()))
+    .then(user => {
+      let token = user.generateToken();
+      res.cookie('token', token);
+      res.send();
+    })
     .catch(next);
 });
 
@@ -20,7 +24,6 @@ router.get('/signin', auth, (req, res, next) => {
 });
 
 router.get('/oauth', (req, res, next) => {
-  console.log(req.query);
 
   authorize(req)
     .then(token => {

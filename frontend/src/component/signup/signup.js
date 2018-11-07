@@ -42,7 +42,7 @@ export class SignupContainer extends React.Component {
       .catch(() => this.setState({ usernameAvailable: false }));
   };
 
-  validateChange() {
+  validateChange(e) {
     let { name, value } = e.target;
     let error = null;
     if (name === 'username') {
@@ -111,6 +111,7 @@ export class SignupContainer extends React.Component {
           </div>
           <Tooltip message={this.state.passwordError} />
           <input name='password' type='password' placeholder='password' value={this.state.password} onChange={this.handleChange} />
+          <button type='submit'>Submit</button>
         </form>
       </div>
     );

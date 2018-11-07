@@ -5,6 +5,9 @@ import queryString from 'querystring';
 
 export class LandingContainer extends React.Component {
 
+  componentDidMount(){
+    console.log('in landing');
+  }
   render() {
 
     let googleLoginBaseURL = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -12,7 +15,7 @@ export class LandingContainer extends React.Component {
     let googleLoginQuery = queryString.stringify({
       client_id: __GOOGLE_CLIENT_ID__,
       response_type: 'code',
-      redirect_uri: `${__API_URL__}/oauth/google/code`,
+      redirect_uri: `${__API_URL__}/oauth`,
       scope: `openid profile email`,
       prompt: __DEBUG__ ? 'consent' : null
     })

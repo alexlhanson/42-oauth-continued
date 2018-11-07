@@ -26,11 +26,11 @@ export class App extends React.Component {
               <Header actions={this.props.actions} />
               <MemoryRouter>
                 <Switch location={{ pathname: this.props.route }}>
-                  <Route path='landing' component={LandingContainer} />
-                  <Route path='signup' component={SignupContainer} />
-                  <Route path='chat' component={() => <p>chat</p>} />
-                  <Route path='login' component={() => <p>login</p>} />
-                  <Route path='settings' component={() => <p>settings</p>} />
+                  <Route path='/landing' component={LandingContainer} />
+                  <Route path='/signup' component={SignupContainer} />
+                  <Route path='/chat' component={() => <p>chat</p>} />
+                  <Route path='/login' component={() => <p>login</p>} />
+                  <Route path='/settings' component={() => <p>settings</p>} />
                 </Switch>
               </MemoryRouter>
             </div>

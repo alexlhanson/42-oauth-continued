@@ -28,6 +28,7 @@ export const signupRequest = user => dispatch => {
     .send(user)
     .withCredentials()
     .then(res => {
+      console.log(res);
       let token = utils.cookieFetch('chatToken');
       if (token) dispatch(login(token)); 
       return res;
