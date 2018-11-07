@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import mongoose from 'mongoose';
+import { promisify } from 'util';
 
 let Schema = mongoose.Schema;
 
@@ -78,5 +79,10 @@ userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password)
     .then(valid => valid ? this : null);
 };
+
+userSchema.fromToken = function(token){
+  return promisify(jwt.verify)(token, process.env.SECRET)
+    .then(())
+}
 
 export default mongoose.model('users', userSchema);

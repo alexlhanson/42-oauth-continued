@@ -12,14 +12,14 @@ router.post('/signup', (req, res, next) => {
   user.save()
     .then(user => {
       let token = user.generateToken();
-      res.cookie('token', token);
+      res.cookie('chatToken', token);
       res.send();
     })
     .catch(next);
 });
 
 router.get('/signin', auth, (req, res, next) => {
-  res.cookie('token', req.token);
+  res.cookie('chatToken', req.token);
   res.send(req.token);
 });
 
@@ -27,7 +27,7 @@ router.get('/oauth', (req, res, next) => {
 
   authorize(req)
     .then(token => {
-      res.cookie('token', token);
+      res.cookie('chatToken', token);
       res.redirect(process.env.REDIRECT_CLIENT_URI);
 
     })
